@@ -1,4 +1,4 @@
-# Hand Tracker
+# Gesture Tracker
 
 This project uses the tensorflow hand detection library to manipulate the square on the screen. Eventually, a user will be able to navigate the website using predetermined gestures.
 
