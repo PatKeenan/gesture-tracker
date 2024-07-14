@@ -23,7 +23,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.7
