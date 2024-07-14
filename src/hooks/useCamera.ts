@@ -48,9 +48,8 @@ export const useCamera = (
 
   const stopStream = () => {
     console.log("Stopping stream");
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
+    stream?.getTracks().forEach((track) => track.stop());
+    videoRef.current?.pause();
     setStream(null);
     setIsReady(false);
   };

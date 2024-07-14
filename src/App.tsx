@@ -15,13 +15,19 @@ const colorOptions = [
   "bg-slate-900",
 ];
 
-const handLookup = [];
+/* const fingerIndeces = {
+  thumb: [0, 1, 2, 3, 4],
+  indexFinger: [0, 5, 6, 7, 8],
+  middleFinger: [0, 9, 10, 11, 12],
+  ringFinger: [0, 13, 14, 15, 16],
+  pinky: [0, 17, 18, 19, 20],
+}; */
 
 import clsx from "clsx";
 function App() {
   const [detector, setDetector] = React.useState<HandLandmarker | null>(null);
   const [shouldDetect, setShouldDetect] = React.useState<boolean>(false);
-  const activeContainer = React.useRef<number>(0).current;
+  const activeContainer = React.useRef<number>(0);
 
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
@@ -37,11 +43,13 @@ function App() {
   const handleStopStream = () => {
     setShouldDetect(false);
     stopStream();
+    location.hash = "";
   };
 
   React.useEffect(() => {
     let timeout: NodeJS.Timeout;
     let lastVideoTime = -1;
+
     const run = () => {
       // Create the detector loop
       const loop = () => {
@@ -55,7 +63,30 @@ function App() {
                 startTimeMs
               );
 
-              console.log(results);
+              const { landmarks } = results;
+              if (landmarks[0]) {
+                const ringTip = landmarks[0][8];
+                if (ringTip) {
+                  console.log(ringTip.x);
+                  if (ringTip.y < 0.5) {
+                    if (activeContainer.current !== 0) {
+                      location.hash = `#container-${
+                        activeContainer.current - 1
+                      }`;
+                      activeContainer.current += -1;
+                    }
+                  }
+                  if (ringTip.y > 0.5) {
+                    // Down
+                    if (activeContainer.current !== colorOptions.length) {
+                      location.hash = `#container-${
+                        activeContainer.current + 1
+                      }`;
+                      activeContainer.current += 1;
+                    }
+                  }
+                }
+              }
             }
           }
 
@@ -83,6 +114,8 @@ function App() {
       setDetector(d);
     };
     init();
+
+    // TODO: Set the location back on scroll or handle scrolling in a different way
   }, []);
 
   ////////////////////////////
@@ -95,13 +128,19 @@ function App() {
         <div className="flex space-x-4 w-full justify-end">
           <button
             onClick={handleStartStream}
-            className="px-4 py-2 bg-slate-100 border-[1px] rounded-md text-slate-900 border-transparent ml-auto"
+            disabled={!detector}
+            className="px-4 py-2 bg-slate-100 border-[1px] w-[150px] text-center rounded-md text-slate-900 border-transparent ml-auto disabled:bg-slate-100/20"
           >
-            Start Detector
+            {!detector
+              ? "initialing..."
+              : shouldDetect
+              ? "Detecting..."
+              : "Start Detector"}
           </button>
           <button
+            disabled={!shouldDetect}
             onClick={handleStopStream}
-            className="px-4 py-2 border-[1px] border-slate-100 rounded-md text-slate-50"
+            className="px-4 py-2 border-[1px] border-slate-100 rounded-md text-slate-50 disabled:opacity-30"
           >
             Stop Detector
           </button>
@@ -114,18 +153,25 @@ function App() {
           muted
         />
       </div>
-
-      {Array.from({ length: colorOptions.length }).map((_, i) => (
-        <div
-          id={`container-${i}`}
-          className={clsx(
-            colorOptions[i],
-            "min-h-screen w-screen grid place-items-center flex-grow"
-          )}
-        >
-          <h3>Container {i + 1}</h3>
-        </div>
-      ))}
+      <div id="containers">
+        {Array.from({ length: colorOptions.length }).map((_, i) => (
+          <div
+            id={`container-${i + 1}`}
+            className={clsx(
+              colorOptions[i],
+              "min-h-screen w-screen grid place-items-center flex-grow"
+            )}
+          >
+            <div>
+              <h3>
+                {i == 0 && !shouldDetect
+                  ? "Press Start Detector and Point your index finger up and down to scroll containers"
+                  : `Container ${i + 1}`}
+              </h3>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
