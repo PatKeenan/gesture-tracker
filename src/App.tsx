@@ -125,7 +125,14 @@ function App() {
         <h1 className="text-xl text-slate-50 flex-shrink-0">
           Gesture Navigation
         </h1>
-        <div className="flex space-x-4 w-full justify-end">
+        <div className="flex space-x-4 w-full justify-end items-center">
+          <a
+            href="https://github.com/PatKeenan/gesture-tracker"
+            target="_blank"
+            className="font-thin text-sm"
+          >
+            Github
+          </a>
           <button
             onClick={handleStartStream}
             disabled={!detector}
