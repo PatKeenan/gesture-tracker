@@ -8,6 +8,9 @@ dependencies:
   '@mediapipe/hands':
     specifier: ^0.4.1675469240
     version: 0.4.1675469240
+  '@mediapipe/tasks-vision':
+    specifier: ^0.10.14
+    version: 0.10.14
   '@tensorflow-models/hand-pose-detection':
     specifier: ^2.0.1
     version: 2.0.1(@mediapipe/hands@0.4.1675469240)(@tensorflow/tfjs-backend-webgl@4.20.0)(@tensorflow/tfjs-converter@4.20.0)(@tensorflow/tfjs-core@4.20.0)
@@ -20,6 +23,9 @@ dependencies:
   '@tensorflow/tfjs-backend-webgl':
     specifier: ^4.20.0
     version: 4.20.0(@tensorflow/tfjs-core@4.20.0)
+  clsx:
+    specifier: ^2.1.1
+    version: 2.1.1
   react:
     specifier: ^18.3.1
     version: 18.3.1
@@ -617,6 +623,10 @@ packages:
 
   /@mediapipe/hands@0.4.1675469240:
     resolution: {integrity: sha512-GxoZvL1mmhJxFxjuyj7vnC++JIuInGznHBin5c7ZSq/RbcnGyfEcJrkM/bMu5K1Mz/2Ko+vEX6/+wewmEHPrHg==}
+    dev: false
+
+  /@mediapipe/tasks-vision@0.10.14:
+    resolution: {integrity: sha512-vOifgZhkndgybdvoRITzRkIueWWSiCKuEUXXK6Q4FaJsFvRJuwgg++vqFUMlL0Uox62U5aEXFhHxlhV7Ja5e3Q==}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
@@ -1315,6 +1325,11 @@ packages:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
+    dev: false
+
+  /clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
     dev: false
 
   /color-convert@1.9.3:
