@@ -1,6 +1,6 @@
 # Gesture Tracker
 
-This project uses the tensorflow hand detection library to manipulate the square on the screen. Eventually, a user will be able to navigate the website using predetermined gestures.
+This project the webcam to detect if either of your index fingers are pointed up or down. The application will scroll up or down depending on the direction of the detected fingers.
 
 ### Running Locally
 
